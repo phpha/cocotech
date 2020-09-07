@@ -13,15 +13,14 @@ use Cocotech/Kernel;
 
 // 初始化
 Kernel::init([
-    'request_url' => 'https://api.cocotech.cn/v1/',
+    'request_url' => 'https://api.cocotech.cn/',
     'app_id' => 'xxx',
     'public_key' => 'xxx',
     'private_key' => 'xxx'
 ]);
 
 // 调用接口
-$result = Kernel::handle('credit/pingan/order/query', [
-    'outRequestId' => 'xxx',
-    'orderId' => 'xxx'
+$result = Kernel::handle('v1/xxx', [
+    'param' => 'xxx'
 ]);
 ```
