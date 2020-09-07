@@ -1,0 +1,24 @@
+{
+    "name": "phpha/cocotech",
+    "description": "金椰子官方SDK",
+    "type": "library",
+    "require": {
+        "php": "^7.2",
+        "ext-openssl": "*",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cocotech\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PHPHa",
+            "email": "mail@phpha.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
