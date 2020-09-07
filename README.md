@@ -1,13 +1,12 @@
-# 金椰子官方 `SDK`
+# 金椰子官方 SDK
 
 ## 1、安装
 
 ```php
-composer install phpha/cocotech
+composer require phpha/cocotech
 ```
 
 ## 2、使用
-
 
 ```php
 use Cocotech/Kernel;
@@ -21,8 +20,8 @@ Kernel::init([
 ]);
 
 // 调用接口
-$result = Kernel::handle('order/create', [
-    'param1' => 'value1',
-    'param2' => 'value2'
+$result = Kernel::handle('credit/pingan/order/query', [
+    'outRequestId' => 'xxx',
+    'orderId' => 'xxx'
 ]);
 ```
