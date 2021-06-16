@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace App\Services\Helper\Encrypt;
+namespace Cocotech\Services;
 
 class Aes
 {
