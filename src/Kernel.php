@@ -131,6 +131,11 @@ class Kernel
         // 转换格式
         $data = json_decode($data, true);
         // 返回
-        return Helper::return(0, $data);
+        return Helper::return(0, [
+            'appId' => $param['appId'],
+            'requestId' => $param['requestId'],
+            'outRequestId' => $param['outRequestId'],
+            'biz' => $data
+        ]);
     }
 }
