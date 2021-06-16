@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Cocotech\Services;
+namespace App\Services\Helper\Encrypt;
 
 class Aes
 {
@@ -16,8 +16,10 @@ class Aes
      */
     public static function encrypt(string $data, string $key)
     {
+        // 初始化向量
+        $iv = str_repeat(chr(0), 16);
         // 加密
-        $result = @openssl_encrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA);
+        $result = openssl_encrypt($data, 'AES-256-CBC', $key, 1, $iv);
         // 返回
         return $result === false ? false : base64_encode($result);
     }
@@ -30,8 +32,10 @@ class Aes
      */
     public static function decrypt(string $data, string $key)
     {
+        // 初始化向量
+        $iv = str_repeat(chr(0), 16);
         // 解密
-        $result = openssl_decrypt(base64_decode($data), 'AES-256-CBC', $key, OPENSSL_RAW_DATA);
+        $result = openssl_decrypt(base64_decode($data), 'AES-256-CBC', $key, 1, $iv);
         // 返回
         return $result === false ? false : $result;
     }

@@ -1,6 +1,6 @@
 {
     "name": "phpha/cocotech",
-    "description": "金椰子官方SDK",
+    "description": "COCOTECH PHP-SDK",
     "type": "library",
     "require": {
         "php": "^7.2",

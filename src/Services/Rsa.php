@@ -1,10 +1,11 @@
 <?php
 /**
  * RSA|加密|解密|加签|验签
+ * 秘钥长度为 2048位(bit) 秘钥格式为 PKCS1
+ * PKCS8(JAVA适用) 请转换为 PKCS1(PHP适用)
+ * 在线工具 https://miniu.alipay.com/keytool/format
  */
 declare(strict_types=1);
-
-namespace Cocotech\Services;
 
 class Rsa
 {
@@ -117,7 +118,7 @@ class Rsa
         $code = $type === 'public' ? 'PUBLIC' : 'RSA PRIVATE';
         // 格式化
         $format = sprintf("-----BEGIN %s KEY-----", $code);
-        $format .= PHP_EOL . chunk_split($key, 64, PHP_EOL);
+        $format .= "\n" . chunk_split($key, 64, "\n");
         $format .= sprintf("-----END %s KEY-----", $code);
         // 返回
         return $format;

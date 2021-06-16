@@ -38,7 +38,8 @@ class Kernel
     public static function handle(string $api, array $param): array
     {
         // 校验参数
-        if (empty(self::$config['app_id']) || empty(self::$config['public_key']) || empty(self::$config['private_key']) || empty(self::$config['request_url'])) {
+        if (empty(self::$config['app_id']) || empty(self::$config['out_request_id']) || empty(self::$config['bank_code']) || empty(self::$config['acct_type'])
+            || empty(self::$config['public_key']) || empty(self::$config['private_key']) || empty(self::$config['request_url'])) {
             return Helper::return(1001);
         }
         // 格式化
@@ -70,21 +71,26 @@ class Kernel
      */
     private static function format(array $param): string
     {
-        // 请求流水号
-        $param['outRequestId'] = Helper::uniqueId();
+        // 请求参数
+        $param = json_encode($param);
         // 随机秘钥
-        $secret = md5($param['outRequestId']);
+        $secret = md5(Helper::uniqueId());
         // 格式化
         $format = [
             'appId' => self::$config['app_id'],
-            'biz' => Aes::encrypt(json_encode($param), $secret),
+            'outRequestId' => self::$config['out_request_id'],
+            'bankCode' => self::$config['bank_code'],
+            'acctType' => self::$config['acct_type'],
+            'biz' => Aes::encrypt($param, $secret),
             'key' => Rsa::encrypt($secret, self::$config['public_key']),
             'timestamp' => time()
         ];
         // 排序
         ksort($format);
+        // 拼接
+        $str = rawurldecode(http_build_query($format));
         // 加签
-        $format['sign'] = Rsa::sign(urldecode(http_build_query($format)), self::$config['private_key']);
+        $format['sign'] = Rsa::sign($str, self::$config['private_key']);
         // 返回
         return json_encode($format);
     }
@@ -102,8 +108,10 @@ class Kernel
         unset($param['sign']);
         // 排序
         ksort($param);
+        // 拼接
+        $str = rawurldecode(http_build_query($param));
         // 验签
-        $result = Rsa::verify(urldecode(http_build_query($param)), self::$config['public_key'], $sign);
+        $result = Rsa::verify($str, self::$config['public_key'], $sign);
         // 验签失败
         if (!$result) {
             return Helper::return(1011);
